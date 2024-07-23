@@ -1,9 +1,11 @@
-import os
+import PIL.Image
 import google.generativeai as genai
 
 from key import key
 
 genai.configure(api_key=key)
+
+img = PIL.Image.open("lixo_plastico.jpg")
 
 generation_config = {
   "temperature": 1,
@@ -18,11 +20,5 @@ model = genai.GenerativeModel(
   generation_config=generation_config,
 )
 
-chat_session = model.start_chat(
-  history=[]
-)
-
-pergunt = input("faça uma pergunta para o gemini ia: ")
-
-response = chat_session.send_message(pergunt)
+response = model.generate_content(img)
 print(response.text)
